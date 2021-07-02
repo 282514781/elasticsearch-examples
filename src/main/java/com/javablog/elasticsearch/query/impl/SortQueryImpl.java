@@ -28,7 +28,7 @@ public class SortQueryImpl implements SortQuery {
     @Override
     public void queryMatch(String indexName, String typeName, String field,String keyWord) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
-        searchRequest.types(typeName);
+//        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.matchQuery(field,keyWord));
         searchSourceBuilder.sort("replyTotal");
@@ -46,7 +46,7 @@ public class SortQueryImpl implements SortQuery {
     @Override
     public void sortQuery(String indexName, String typeName, String field, String keyWord, String sort, SortOrder sortOrder) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
-        searchRequest.types(typeName);
+//        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.matchQuery(field,keyWord));
         searchSourceBuilder.sort(sort, sortOrder);
@@ -64,7 +64,7 @@ public class SortQueryImpl implements SortQuery {
     @Override
     public void multSortQuery(String indexName, String typeName, String field, String keyWord, String sort1, String sort2, SortOrder sortOrder) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
-        searchRequest.types(typeName);
+//        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.matchQuery(field,keyWord));
         searchSourceBuilder.sort(sort1, sortOrder);

@@ -39,7 +39,7 @@ public class BoolQueryImpl implements BoolQuery {
     @Override
     public void boolQuery(String indexName, String typeName) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
-        searchRequest.types(typeName);
+//        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
         queryBuilder.should(QueryBuilders.termQuery("province","湖北省"));
@@ -70,7 +70,7 @@ public class BoolQueryImpl implements BoolQuery {
     @Override
     public void boostingQuery(String indexName, String typeName) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
-        searchRequest.types(typeName);
+//        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         MatchQueryBuilder matchQueryPositiveBuilder = QueryBuilders.matchQuery("smsContent", "苹果");
         MatchQueryBuilder matchQueryNegativeBuilder = QueryBuilders.matchQuery("smsContent", "水果 乔木 维生素");//

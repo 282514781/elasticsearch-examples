@@ -33,7 +33,7 @@ public class HightLightQueryImpl implements HighLightQuery{
     @Override
     public void hightLightQuery(String indexName, String type,String field,String keyword) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
-        searchRequest.types(type);
+//        searchRequest.types(type);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.from(0);
         searchSourceBuilder.size(5);
@@ -68,7 +68,7 @@ public class HightLightQueryImpl implements HighLightQuery{
     @Override
     public void hightLightQueryByFragment(String indexName, String type, int fragmentSize) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
-        searchRequest.types(type);
+//        searchRequest.types(type);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.from(0);
         searchSourceBuilder.size(5);
@@ -103,7 +103,7 @@ public class HightLightQueryImpl implements HighLightQuery{
     @Override
     public void hightLightQueryByNumOfFragments(String indexName, String type, int fragmentSize,int numOfFragments) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
-        searchRequest.types(type);
+//        searchRequest.types(type);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.from(0);
         searchSourceBuilder.size(5);
@@ -139,7 +139,7 @@ public class HightLightQueryImpl implements HighLightQuery{
     @Override
     public void hightLightNoMatchSize(String indexName, String type, int fragmentSize,int numOfFragments,int noMatchSize) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
-        searchRequest.types(type);
+//        searchRequest.types(type);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.from(0);
         searchSourceBuilder.size(5);

@@ -232,7 +232,7 @@ public class BaseQueryImpl implements BaseQuery {
     public List<Map<String,Object>> queryMulitMatch(String indexName, String typeName,String keyWord,String ...fieldNames) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
         List<Map<String,Object>> response = Lists.newArrayList();
-        searchRequest.types(typeName);
+//        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.multiMatchQuery(keyWord,fieldNames));
         searchRequest.source(searchSourceBuilder);
@@ -260,7 +260,7 @@ public class BaseQueryImpl implements BaseQuery {
     public List<Map<String,Object>> queryMatchPhrase(String indexName, String typeName,String fieldName,String keyWord) throws IOException {
         List<Map<String,Object>> response = Lists.newArrayList();
         SearchRequest searchRequest = new SearchRequest(indexName);
-        searchRequest.types(typeName);
+//        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.matchPhraseQuery(fieldName,keyWord));
         searchRequest.source(searchSourceBuilder);
@@ -279,7 +279,7 @@ public class BaseQueryImpl implements BaseQuery {
     public List<Map<String,Object>> queryMatchPrefixQuery(String indexName, String typeName,String fieldName,String keyWord) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
         List<Map<String,Object>> response = Lists.newArrayList();
-        searchRequest.types(typeName);
+//        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.matchPhrasePrefixQuery(fieldName,keyWord).maxExpansions(1));
         searchRequest.source(searchSourceBuilder);
@@ -306,7 +306,7 @@ public class BaseQueryImpl implements BaseQuery {
     public List<Map<String,Object>> idsQuery(String indexName, String typeName,String ... ids) throws IOException {
         List<Map<String,Object>> response = Lists.newArrayList();
         SearchRequest searchRequest = new SearchRequest(indexName);
-        searchRequest.types(typeName);
+//        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.idsQuery().addIds(ids));
         searchRequest.source(searchSourceBuilder);
@@ -334,7 +334,7 @@ public class BaseQueryImpl implements BaseQuery {
     public List<Map<String,Object>> prefixQuery(String indexName, String typeName, String field, String prefix) throws IOException {
         List<Map<String,Object>> response = Lists.newArrayList();
         SearchRequest searchRequest = new SearchRequest(indexName);
-        searchRequest.types(typeName);
+//        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.prefixQuery(field,prefix));
         searchRequest.source(searchSourceBuilder);
@@ -443,7 +443,7 @@ public class BaseQueryImpl implements BaseQuery {
     public List<Map<String,Object>> rangeQuery(String indexName, String typeName, String fieldName, int from,int to) throws IOException {
         List<Map<String,Object>> response = Lists.newArrayList();
         SearchRequest searchRequest = new SearchRequest(indexName);
-        searchRequest.types(typeName);
+//        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.rangeQuery(fieldName).from(from).to(to));
         searchRequest.source(searchSourceBuilder);
@@ -471,7 +471,7 @@ public class BaseQueryImpl implements BaseQuery {
     public List<Map<String,Object>> regexpQuery(String indexName, String typeName, String fieldName, String regexp) throws IOException {
         List<Map<String,Object>> response = Lists.newArrayList();
         SearchRequest searchRequest = new SearchRequest(indexName);
-        searchRequest.types(typeName);
+//        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.regexpQuery(fieldName,regexp));
         searchRequest.source(searchSourceBuilder);
@@ -491,7 +491,7 @@ public class BaseQueryImpl implements BaseQuery {
     public List<Map<String,Object>> moreLikeThisQuery(String indexName, String typeName, String[] fieldNames, String[] likeTexts) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
         List<Map<String,Object>> response = Lists.newArrayList();
-        searchRequest.types(typeName);
+//        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.moreLikeThisQuery(likeTexts).minTermFreq(1));
         searchRequest.source(searchSourceBuilder);

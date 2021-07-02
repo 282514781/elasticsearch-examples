@@ -32,7 +32,7 @@ public class FilterQueryImpl implements FilterQuery {
     @Override
     public void filterInBoolQuery(String indexName, String typeName) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
-        searchRequest.types(typeName);
+//        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
         queryBuilder.filter(QueryBuilders.termQuery("province","湖北省"));
@@ -52,7 +52,7 @@ public class FilterQueryImpl implements FilterQuery {
     @Override
     public void rangeQuery(String indexName, String typeName, String fieldName, int from,int to) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
-        searchRequest.types(typeName);
+//        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
         queryBuilder.filter(QueryBuilders.termQuery("province","湖北省"));
@@ -72,7 +72,7 @@ public class FilterQueryImpl implements FilterQuery {
     @Override
     public void existQuery(String indexName, String typeName, String fieldName) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
-        searchRequest.types(typeName);
+//        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.existsQuery(fieldName));
         searchRequest.source(searchSourceBuilder);
