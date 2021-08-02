@@ -27,6 +27,13 @@ public class SortQueryImpl implements SortQuery {
     RestHighLevelClient restHighLevelClient;
     @Override
     public void queryMatch(String indexName, String typeName, String field,String keyWord) throws IOException {
+        SearchHit[] h = getSearchHits(indexName, field, keyWord);
+        for (SearchHit hit : h) {
+            log.info("结果"+hit.getSourceAsMap() +",score:"+ hit.getScore());
+        }
+    }
+
+    private SearchHit[] getSearchHits(String indexName, String field, String keyWord) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
 //        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
@@ -37,14 +44,19 @@ public class SortQueryImpl implements SortQuery {
         SearchResponse searchResponse =  restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
         SearchHits hits = searchResponse.getHits();
         log.info("count:"+hits.getTotalHits());
+        return hits.getHits();
+    }
+
+    @Override
+    public void sortQuery(String indexName, String typeName, String field, String keyWord, String sort, SortOrder sortOrder) throws IOException {
+        SearchHits hits = getSearchHits(indexName, field, keyWord, sort, sortOrder);
         SearchHit[] h =  hits.getHits();
         for (SearchHit hit : h) {
             log.info("结果"+hit.getSourceAsMap() +",score:"+ hit.getScore());
         }
     }
 
-    @Override
-    public void sortQuery(String indexName, String typeName, String field, String keyWord, String sort, SortOrder sortOrder) throws IOException {
+    private SearchHits getSearchHits(String indexName, String field, String keyWord, String sort, SortOrder sortOrder) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
 //        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
@@ -55,14 +67,19 @@ public class SortQueryImpl implements SortQuery {
         SearchResponse searchResponse =  restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
         SearchHits hits = searchResponse.getHits();
         log.info("count:"+hits.getTotalHits());
+        return hits;
+    }
+
+    @Override
+    public void multSortQuery(String indexName, String typeName, String field, String keyWord, String sort1, String sort2, SortOrder sortOrder) throws IOException {
+        SearchHits hits = getSearchHits(indexName, field, keyWord, sort1, sort2, sortOrder);
         SearchHit[] h =  hits.getHits();
         for (SearchHit hit : h) {
             log.info("结果"+hit.getSourceAsMap() +",score:"+ hit.getScore());
         }
     }
 
-    @Override
-    public void multSortQuery(String indexName, String typeName, String field, String keyWord, String sort1, String sort2, SortOrder sortOrder) throws IOException {
+    private SearchHits getSearchHits(String indexName, String field, String keyWord, String sort1, String sort2, SortOrder sortOrder) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
 //        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
@@ -74,9 +91,6 @@ public class SortQueryImpl implements SortQuery {
         SearchResponse searchResponse =  restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
         SearchHits hits = searchResponse.getHits();
         log.info("count:"+hits.getTotalHits());
-        SearchHit[] h =  hits.getHits();
-        for (SearchHit hit : h) {
-            log.info("结果"+hit.getSourceAsMap() +",score:"+ hit.getScore());
-        }
+        return hits;
     }
 }

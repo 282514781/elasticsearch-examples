@@ -31,6 +31,14 @@ public class FilterQueryImpl implements FilterQuery {
 
     @Override
     public void filterInBoolQuery(String indexName, String typeName) throws IOException {
+        SearchHits hits = getSearchHits(indexName);
+        SearchHit[] h =  hits.getHits();
+        for (SearchHit hit : h) {
+            log.info("结果"+hit.getSourceAsMap());
+        }
+    }
+
+    private SearchHits getSearchHits(String indexName) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
 //        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
@@ -43,14 +51,19 @@ public class FilterQueryImpl implements FilterQuery {
         SearchResponse searchResponse =  restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
         SearchHits hits = searchResponse.getHits();
         log.info("count:"+hits.getTotalHits());
+        return hits;
+    }
+
+    @Override
+    public void rangeQuery(String indexName, String typeName, String fieldName, int from,int to) throws IOException {
+        SearchHits hits = getSearchHits(indexName, fieldName, from, to);
         SearchHit[] h =  hits.getHits();
         for (SearchHit hit : h) {
             log.info("结果"+hit.getSourceAsMap());
         }
     }
 
-    @Override
-    public void rangeQuery(String indexName, String typeName, String fieldName, int from,int to) throws IOException {
+    private SearchHits getSearchHits(String indexName, String fieldName, int from, int to) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
 //        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
@@ -63,14 +76,19 @@ public class FilterQueryImpl implements FilterQuery {
         SearchResponse searchResponse =  restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
         SearchHits hits = searchResponse.getHits();
         log.info("count:"+hits.getTotalHits());
+        return hits;
+    }
+
+    @Override
+    public void existQuery(String indexName, String typeName, String fieldName) throws IOException {
+        SearchHits hits = getSearchHits(indexName, fieldName);
         SearchHit[] h =  hits.getHits();
         for (SearchHit hit : h) {
             log.info("结果"+hit.getSourceAsMap());
         }
     }
 
-    @Override
-    public void existQuery(String indexName, String typeName, String fieldName) throws IOException {
+    private SearchHits getSearchHits(String indexName, String fieldName) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
 //        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
@@ -80,10 +98,7 @@ public class FilterQueryImpl implements FilterQuery {
         SearchResponse searchResponse =  restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
         SearchHits hits = searchResponse.getHits();
         log.info("count:"+hits.getTotalHits());
-        SearchHit[] h =  hits.getHits();
-        for (SearchHit hit : h) {
-            log.info("结果"+hit.getSourceAsMap());
-        }
+        return hits;
     }
 
     @Override

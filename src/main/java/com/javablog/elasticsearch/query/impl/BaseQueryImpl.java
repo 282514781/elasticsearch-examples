@@ -90,11 +90,7 @@ public class BaseQueryImpl implements BaseQuery {
         sourceBuilder.query(QueryBuilders.termsQuery(fieldName,fieldValues));
         sourceBuilder.from(0);
         sourceBuilder.size(10);
-        searchRequest.source(sourceBuilder);
-        log.info("source:" + searchRequest.source());
-        SearchResponse searchResponse =  restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-        SearchHits hits = searchResponse.getHits();
-        log.info("count:"+hits.getTotalHits());
+        SearchHits hits = getSearchHits(searchRequest, sourceBuilder, "source:");
         SearchHit[] h =  hits.getHits();
         for (SearchHit hit : h) {
             log.info("结果"+hit.getSourceAsMap());
@@ -146,11 +142,7 @@ public class BaseQueryImpl implements BaseQuery {
 //        searchRequest.routing();
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.matchQuery(field,keyWord));
-        searchRequest.source(searchSourceBuilder);
-        log.info("source:" + searchRequest.source());
-        SearchResponse searchResponse =  restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-        SearchHits hits = searchResponse.getHits();
-        log.info("count:"+hits.getTotalHits());
+        SearchHits hits = getSearchHits(searchRequest, searchSourceBuilder, "source:");
         SearchHit[] h =  hits.getHits();
         for (SearchHit hit : h) {
             log.info("结果"+hit.getSourceAsMap());
@@ -207,11 +199,7 @@ public class BaseQueryImpl implements BaseQuery {
             }
         }
         searchSourceBuilder.query(orQuery);
-        searchRequest.source(searchSourceBuilder);
-        log.info("source:" + searchRequest.source());
-        SearchResponse searchResponse =  restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-        SearchHits hits = searchResponse.getHits();
-        log.info("count:"+hits.getTotalHits());
+        SearchHits hits = getSearchHits(searchRequest, searchSourceBuilder, "source:");
         SearchHit[] h =  hits.getHits();
         for (SearchHit hit : h) {
             log.info("结果"+hit.getSourceAsMap());
@@ -235,11 +223,7 @@ public class BaseQueryImpl implements BaseQuery {
 //        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.multiMatchQuery(keyWord,fieldNames));
-        searchRequest.source(searchSourceBuilder);
-        log.info("source:" + searchRequest.source());
-        SearchResponse searchResponse =  restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-        SearchHits hits = searchResponse.getHits();
-        log.info("count:"+hits.getTotalHits());
+        SearchHits hits = getSearchHits(searchRequest, searchSourceBuilder, "source:");
         SearchHit[] h =  hits.getHits();
         for (SearchHit hit : h) {
             log.info("结果"+hit.getSourceAsMap());
@@ -282,11 +266,7 @@ public class BaseQueryImpl implements BaseQuery {
 //        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.matchPhrasePrefixQuery(fieldName,keyWord).maxExpansions(1));
-        searchRequest.source(searchSourceBuilder);
-        log.info("source:" + searchRequest.source());
-        SearchResponse searchResponse =  restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-        SearchHits hits = searchResponse.getHits();
-        log.info("count:"+hits.getTotalHits());
+        SearchHits hits = getSearchHits(searchRequest, searchSourceBuilder, "source:");
         SearchHit[] h =  hits.getHits();
         for (SearchHit hit : h) {
             log.info("结果"+hit.getSourceAsMap());
@@ -309,11 +289,7 @@ public class BaseQueryImpl implements BaseQuery {
 //        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.idsQuery().addIds(ids));
-        searchRequest.source(searchSourceBuilder);
-        log.info("string:" + searchRequest.source());
-        SearchResponse searchResponse =  restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-        SearchHits hits = searchResponse.getHits();
-        log.info("count:"+hits.getTotalHits());
+        SearchHits hits = getSearchHits(searchRequest, searchSourceBuilder, "string:");
         SearchHit[] h =  hits.getHits();
         for (SearchHit hit : h) {
             log.info("结果"+hit.getSourceAsMap());
@@ -337,11 +313,7 @@ public class BaseQueryImpl implements BaseQuery {
 //        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.prefixQuery(field,prefix));
-        searchRequest.source(searchSourceBuilder);
-        log.info("string:" + searchRequest.source());
-        SearchResponse searchResponse =  restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-        SearchHits hits = searchResponse.getHits();
-        log.info("count:"+hits.getTotalHits());
+        SearchHits hits = getSearchHits(searchRequest, searchSourceBuilder, "string:");
         SearchHit[] h =  hits.getHits();
         for (SearchHit hit : h) {
             log.info("结果"+hit.getSourceAsMap());
@@ -390,11 +362,7 @@ public class BaseQueryImpl implements BaseQuery {
 //        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.fuzzyQuery(field,value).prefixLength(2));
-        searchRequest.source(searchSourceBuilder);
-        log.info("string:" + searchRequest.source());
-        SearchResponse searchResponse =  restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-        SearchHits hits = searchResponse.getHits();
-        log.info("count:"+hits.getTotalHits());
+        SearchHits hits = getSearchHits(searchRequest, searchSourceBuilder, "string:");
         SearchHit[] h =  hits.getHits();
         for (SearchHit hit : h) {
             log.info("结果"+hit.getSourceAsMap());
@@ -417,11 +385,7 @@ public class BaseQueryImpl implements BaseQuery {
 //        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.wildcardQuery(fieldName, wildcard));
-        searchRequest.source(searchSourceBuilder);
-        log.info("string:" + searchRequest.source());
-        SearchResponse searchResponse =  restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-        SearchHits hits = searchResponse.getHits();
-        log.info("count:"+hits.getTotalHits());
+        SearchHits hits = getSearchHits(searchRequest, searchSourceBuilder, "string:");
         SearchHit[] h =  hits.getHits();
         for (SearchHit hit : h) {
             log.info("结果"+hit.getSourceAsMap());
@@ -446,11 +410,7 @@ public class BaseQueryImpl implements BaseQuery {
 //        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.rangeQuery(fieldName).from(from).to(to));
-        searchRequest.source(searchSourceBuilder);
-        log.info("string:" + searchRequest.source());
-        SearchResponse searchResponse =  restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-        SearchHits hits = searchResponse.getHits();
-        log.info("count:"+hits.getTotalHits());
+        SearchHits hits = getSearchHits(searchRequest, searchSourceBuilder, "string:");
         SearchHit[] h =  hits.getHits();
         for (SearchHit hit : h) {
             log.info("结果"+hit.getSourceAsMap());
@@ -474,11 +434,7 @@ public class BaseQueryImpl implements BaseQuery {
 //        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.regexpQuery(fieldName,regexp));
-        searchRequest.source(searchSourceBuilder);
-        log.info("string:" + searchRequest.source());
-        SearchResponse searchResponse =  restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-        SearchHits hits = searchResponse.getHits();
-        log.info("count:"+hits.getTotalHits());
+        SearchHits hits = getSearchHits(searchRequest, searchSourceBuilder, "string:");
         SearchHit[] h =  hits.getHits();
         for (SearchHit hit : h) {
             log.info("结果"+hit.getSourceAsMap());
@@ -494,17 +450,22 @@ public class BaseQueryImpl implements BaseQuery {
 //        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.moreLikeThisQuery(likeTexts).minTermFreq(1));
-        searchRequest.source(searchSourceBuilder);
-        log.info("string:" + searchRequest.source());
-        SearchResponse searchResponse =  restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-        SearchHits hits = searchResponse.getHits();
-        log.info("count:"+hits.getTotalHits());
+        SearchHits hits = getSearchHits(searchRequest, searchSourceBuilder, "string:");
         SearchHit[] h =  hits.getHits();
         for (SearchHit hit : h) {
             log.info("结果"+hit.getSourceAsMap());
             response.add(hit.getSourceAsMap());
         }
         return response;
+    }
+
+    private SearchHits getSearchHits(SearchRequest searchRequest, SearchSourceBuilder searchSourceBuilder, String s) throws IOException {
+        searchRequest.source(searchSourceBuilder);
+        log.info(s + searchRequest.source());
+        SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+        SearchHits hits = searchResponse.getHits();
+        log.info("count:" + hits.getTotalHits());
+        return hits;
     }
 
     @Override

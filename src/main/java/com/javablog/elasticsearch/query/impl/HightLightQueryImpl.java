@@ -33,7 +33,6 @@ public class HightLightQueryImpl implements HighLightQuery{
     @Override
     public void hightLightQuery(String indexName, String type,String field,String keyword) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
-//        searchRequest.types(type);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.from(0);
         searchSourceBuilder.size(5);
@@ -43,13 +42,7 @@ public class HightLightQueryImpl implements HighLightQuery{
         HighlightBuilder highlightBuilder = new HighlightBuilder();
         highlightBuilder.requireFieldMatch(false).field(field).
                 preTags("<b><font color=red>").postTags("</font></b>");
-        searchSourceBuilder.highlighter(highlightBuilder);
-        searchSourceBuilder.query( queryBuilder);
-        searchRequest.source(searchSourceBuilder);
-        log.info("source string:" + searchRequest.source());
-        SearchResponse searchResponse =  restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-        SearchHits hits = searchResponse.getHits();
-        log.info("count:"+hits.getTotalHits());
+        SearchHits hits = getSearchHits(searchRequest, searchSourceBuilder, queryBuilder, highlightBuilder);
         SearchHit[] h =  hits.getHits();
         for (SearchHit hit : h) {
             //得到高亮显示的集合
@@ -65,10 +58,20 @@ public class HightLightQueryImpl implements HighLightQuery{
         }
     }
 
+    private SearchHits getSearchHits(SearchRequest searchRequest, SearchSourceBuilder searchSourceBuilder, MatchQueryBuilder queryBuilder, HighlightBuilder highlightBuilder) throws IOException {
+        searchSourceBuilder.highlighter(highlightBuilder);
+        searchSourceBuilder.query(queryBuilder);
+        searchRequest.source(searchSourceBuilder);
+        log.info("source string:" + searchRequest.source());
+        SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+        SearchHits hits = searchResponse.getHits();
+        log.info("count:" + hits.getTotalHits());
+        return hits;
+    }
+
     @Override
     public void hightLightQueryByFragment(String indexName, String type, int fragmentSize) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
-//        searchRequest.types(type);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.from(0);
         searchSourceBuilder.size(5);
@@ -79,13 +82,7 @@ public class HightLightQueryImpl implements HighLightQuery{
         highlightBuilder.requireFieldMatch(false).field("smsContent").
                 preTags("<b><em style='color:red;'>").postTags("</em></b>");
         highlightBuilder.fragmentSize(fragmentSize);
-        searchSourceBuilder.highlighter(highlightBuilder);
-        searchSourceBuilder.query( queryBuilder);
-        searchRequest.source(searchSourceBuilder);
-        log.info("source string:" + searchRequest.source());
-        SearchResponse searchResponse =  restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-        SearchHits hits = searchResponse.getHits();
-        log.info("count:"+hits.getTotalHits());
+        SearchHits hits = getSearchHits(searchRequest, searchSourceBuilder, queryBuilder, highlightBuilder);
         SearchHit[] h =  hits.getHits();
         for (SearchHit hit : h) {
             //得到高亮显示的集合
@@ -103,7 +100,6 @@ public class HightLightQueryImpl implements HighLightQuery{
     @Override
     public void hightLightQueryByNumOfFragments(String indexName, String type, int fragmentSize,int numOfFragments) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
-//        searchRequest.types(type);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.from(0);
         searchSourceBuilder.size(5);
@@ -115,13 +111,7 @@ public class HightLightQueryImpl implements HighLightQuery{
                 preTags("<b><em style='color:red;'>").postTags("</em></b>");
         highlightBuilder.fragmentSize(fragmentSize);
         highlightBuilder.numOfFragments(numOfFragments);
-        searchSourceBuilder.highlighter(highlightBuilder);
-        searchSourceBuilder.query( queryBuilder);
-        searchRequest.source(searchSourceBuilder);
-        log.info("source string:" + searchRequest.source());
-        SearchResponse searchResponse =  restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-        SearchHits hits = searchResponse.getHits();
-        log.info("count:"+hits.getTotalHits());
+        SearchHits hits = getSearchHits(searchRequest, searchSourceBuilder, queryBuilder, highlightBuilder);
         SearchHit[] h =  hits.getHits();
         for (SearchHit hit : h) {
             //得到高亮显示的集合
@@ -139,7 +129,6 @@ public class HightLightQueryImpl implements HighLightQuery{
     @Override
     public void hightLightNoMatchSize(String indexName, String type, int fragmentSize,int numOfFragments,int noMatchSize) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
-//        searchRequest.types(type);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.from(0);
         searchSourceBuilder.size(5);

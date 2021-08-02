@@ -47,7 +47,6 @@ public class GeoQueryImpl implements GeoQuery {
     @Override
     public void geoDistanceQuery(String indexName, String typeName, double lot, double lon, int distance) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
-//        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         GeoDistanceQueryBuilder geoDistanceQueryBuilder = QueryBuilders.geoDistanceQuery("location")
                 .point(lot,lon).
@@ -78,7 +77,6 @@ public class GeoQueryImpl implements GeoQuery {
     @Override
     public void geoBoundingBoxQuery(String indexName, String typeName, double top, double left, double bottom, double right) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
-//        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         GeoBoundingBoxQueryBuilder address = QueryBuilders.geoBoundingBoxQuery("location").setCorners(top, left, bottom, right);
         searchSourceBuilder.query(address);
@@ -96,7 +94,6 @@ public class GeoQueryImpl implements GeoQuery {
     @Override
     public void geoPolygonQuery(String indexName, String typeName) throws IOException {
         SearchRequest searchRequest = new SearchRequest(indexName);
-//        searchRequest.types(typeName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         List<GeoPoint> points=new ArrayList<GeoPoint>();
         points.add(new GeoPoint(42, -72));
