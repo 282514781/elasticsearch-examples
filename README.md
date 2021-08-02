@@ -1,6 +1,4 @@
-**完整代码与资料下载，问题交流，请加QQ群，群号（1047661092）**
 
-![](./docs/images/ma.png)
 
 史上最全elasticsearch JAVA API使用代码,包括了几乎所有的常用查询API示例。
 
@@ -119,8 +117,3 @@ Elasticsearch 会在7.0之后的版本废弃TransportClient，在8.0之后的版
 
 
 
-# Java技术交流QQ群
-
-完整代码与资料下载，问题交流，请加QQ群，群号（**1047661092**）
-
-![](./docs/images/ma.png)
