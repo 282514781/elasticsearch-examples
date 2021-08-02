@@ -1,5 +1,5 @@
 # elasticsearch-examples
- 全部开源出来。不要再被黑心的程序员收费看其余的类
+ 
 史上最全elasticsearch JAVA API使用代码,包括了几乎所有的常用查询API示例。
 
 Elasticsearch 会在7.0之后的版本废弃TransportClient，在8.0之后的版本移除TransportClient (文档)。因此，使用RestClient来进行相关的操作。
